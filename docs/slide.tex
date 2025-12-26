@@ -1,0 +1,99 @@
+% docs/slides.tex
+\documentclass[aspectratio=169]{beamer}
+\usepackage{xeCJK}
+\setCJKmainfont{Source Han Sans TW} % 保持與報告一致的字體
+\usepackage{booktabs}
+\usepackage{graphicx}
+
+% 設定主題 (推薦用簡潔的 metropolis 或 default)
+\usetheme{Madrid}
+\usecolortheme{beaver}
+
+\title{經典風險因子模型之比較與解釋力分析}
+\subtitle{金融科技導論期末報告 (M-3)}
+\author{鍾詠傑 (41173058H)}
+\institute{國立臺灣師範大學}
+\date{\today}
+
+\begin{document}
+
+% 封面
+\frame{\titlepage}
+
+% 大綱
+\begin{frame}{報告大綱}
+    \tableofcontents
+\end{frame}
+
+% 1. 研究動機
+\section{研究動機與選股}
+\begin{frame}{研究動機與選股策略}
+    \begin{itemize}
+        \item \textbf{目標}：分析 Fama-French 模型在消費零售業的解釋力。
+        \item \textbf{選股 (10檔)}：
+        \begin{itemize}
+            \item \textbf{必需消費}：Walmart, Costco, Coca-Cola, Pepsi
+            \item \textbf{非必需消費}：Nike, Starbucks, McDonald's
+            \item \textbf{科技零售對照}：Amazon
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+% 2. 累積報酬圖表 (直接引用產出的圖片)
+\section{績效表現}
+\begin{frame}{投資組合累積報酬率 (2019-2023)}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.85\textwidth]{../output/images/cumulative_returns.png}
+        \caption{Amazon 展現高成長與高波動，傳統零售股相對穩健。}
+    \end{figure}
+\end{frame}
+
+% 3. 模型比較 (直接引用產出的表格)
+\section{模型解釋力分析}
+\begin{frame}{模型解釋力比較 ($R^2$)}
+    \begin{table}
+        \centering
+        \tiny % 縮小字體以放入投影片
+        \input{../output/tables/r2_comparison.tex}
+        \caption{FF5 模型顯著提升了 Amazon 與 Costco 的解釋力。}
+    \end{table}
+\end{frame}
+
+% 4. 因子分析
+\section{因子顯著性}
+\begin{frame}{Fama-French 五因子係數分析}
+    \begin{columns}
+        \column{0.5\textwidth}
+        \textbf{關鍵發現：}
+        \begin{itemize}
+            \item \textbf{SMB (規模)}：全為負值，符合大型股特徵。
+            \item \textbf{RMW (獲利)}：Costco (0.45) 顯著為正，反映高品質護城河。
+            \item \textbf{CMA (投資)}：Amazon (-1.01) 為負，反映激進擴張；Pepsi 為正，反映保守穩健。
+        \end{itemize}
+
+        \column{0.5\textwidth}
+        \begin{figure}
+            \includegraphics[width=\textwidth]{../output/images/factor_corr.png}
+            \caption{因子相關性熱圖}
+        \end{figure}
+    \end{columns}
+\end{frame}
+
+% 5. 結論
+\section{結論}
+\begin{frame}{結論}
+    \begin{block}{總結}
+        \begin{enumerate}
+            \item \textbf{模型優勢}：FF5 能有效解釋 CAPM 無法捕捉的「品質 (Quality)」與「成長 (Growth)」溢酬。
+            \item \textbf{產業洞察}：零售業巨頭普遍具有高 RMW 特徵。
+            \item \textbf{投資應用}：建議在升息環境下配置高 CMA (保守投資) 與高 RMW (高獲利) 的防禦型股票。
+        \end{enumerate}
+    \end{block}
+\end{frame}
+
+\begin{frame}
+    \centering \Huge 謝謝聆聽 \\ \large Q \& A
+\end{frame}
+
+\end{document}

@@ -27,9 +27,12 @@ output/
 *.toc
 *.lof
 *.lot
+*.nav
+*.snm
 
-# Keep the final PDF
+# Keep the final PDFs
 !docs/report.pdf
+!docs/slide.pdf
 
 # macOS
 .DS_Store

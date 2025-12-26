@@ -26,6 +26,7 @@ make all
 make help      # 顯示所有可用命令
 make analysis  # 僅執行數據分析
 make report    # 僅編譯 LaTeX 報告
+make slide     # 僅編譯 Beamer 投影片
 make clean     # 清理生成的檔案
 make lint      # 檢查代碼風格
 make format    # 格式化代碼
@@ -35,6 +36,7 @@ make format    # 格式化代碼
 - `output/tables/` - LaTeX 表格（R² 比較、FF5 因子係數）
 - `output/images/` - 視覺化圖表（累積報酬率、因子相關性）
 - `docs/report.pdf` - 最終報告 PDF
+- `docs/slide.pdf` - 簡報投影片 PDF
 
 ---
 

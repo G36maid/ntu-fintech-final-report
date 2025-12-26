@@ -1,4 +1,4 @@
-.PHONY: help install run analysis report clean lint format test all
+.PHONY: help install run analysis report slide clean lint format test all
 
 # Default target
 help:
@@ -7,7 +7,8 @@ help:
 	@echo "  make run        - Run the complete analysis pipeline"
 	@echo "  make analysis   - Run analysis only (no report compilation)"
 	@echo "  make report     - Compile LaTeX report to PDF"
-	@echo "  make all        - Run analysis and compile report"
+	@echo "  make slide      - Compile Beamer presentation to PDF"
+	@echo "  make all        - Run analysis and compile report & slides"
 	@echo "  make clean      - Remove generated files (output/, LaTeX aux files)"
 	@echo "  make lint       - Run code linting with ruff"
 	@echo "  make format     - Format code with ruff"
@@ -34,22 +35,31 @@ report:
 	cd docs && xelatex -interaction=nonstopmode report.tex
 	@echo "✅ Report compiled: docs/report.pdf"
 
+# Compile Beamer slides
+slide:
+	@echo "📊 Compiling Beamer presentation..."
+	cd docs && xelatex -interaction=nonstopmode slide.tex
+	@echo "🔄 Running second pass for table of contents..."
+	cd docs && xelatex -interaction=nonstopmode slide.tex
+	@echo "✅ Slides compiled: docs/slide.pdf"
+
 # Run everything
-all: analysis report
+all: analysis report slide
 	@echo "✅ Complete pipeline finished!"
 	@echo "📊 Results: output/tables/ and output/images/"
 	@echo "📄 Report: docs/report.pdf"
+	@echo "📊 Slides: docs/slide.pdf"
 
 # Clean generated files
 clean:
 	@echo "🧹 Cleaning generated files..."
 	rm -rf output/tables/*.tex output/images/*.png
-	rm -f docs/*.aux docs/*.log docs/*.out docs/*.fls docs/*.fdb_latexmk docs/*.synctex.gz docs/*.xdv
-	@echo "✅ Cleaned (kept docs/report.pdf)"
+	rm -f docs/*.aux docs/*.log docs/*.out docs/*.fls docs/*.fdb_latexmk docs/*.synctex.gz docs/*.xdv docs/*.nav docs/*.snm docs/*.toc
+	@echo "✅ Cleaned (kept docs/report.pdf and docs/slide.pdf)"
 
-# Deep clean (including PDF)
+# Deep clean (including PDFs)
 clean-all: clean
-	rm -f docs/report.pdf
+	rm -f docs/report.pdf docs/slide.pdf
 	@echo "✅ Deep clean complete"
 
 # Lint code
