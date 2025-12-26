@@ -46,3 +46,8 @@ output/
 
 # UV lock file (keep it for reproducibility)
 # uv.lock
+
+# submitt
+*.zip
+*.tar.gz
+*.tar.xz
