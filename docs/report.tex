@@ -1,0 +1,61 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+% 若需要中文字體 (建議使用 XeLaTeX 編譯)
+\usepackage{xeCJK}
+\setCJKmainfont{Taipei Sans TC Beta} % 這裡請換成你系統有的字體，如 "Microsoft JhengHei" 或 "Noto Sans TC"
+
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs} % 用於漂亮的表格線條
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{hyperref}
+
+\geometry{left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm}
+
+\title{期末報告：M-3 消費與零售通路組合之資產定價分析}
+\author{你的姓名 \\ 學號：XXXXXXXX}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{選股與特徵整理}
+本研究選擇了 10 檔代表性的消費與零售股票，包含必需性消費（如 Walmart, Costco）與非必需性消費（如 Nike, Starbucks），並加入 Amazon 作為科技零售的對照組。
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{output/images/cumulative_returns.png}
+    \caption{投資組合累積報酬率 (2020-2023)}
+    \label{fig:returns}
+\end{figure}
+
+\section{模型架構}
+本研究比較三種經典資產定價模型。以 Fama-French 五因子模型為例，其回歸方程式如下：
+\begin{equation}
+R_{it} - R_{ft} = \alpha_i + \beta_i(R_{Mt} - R_{ft}) + s_i SMB_t + h_i HML_t + r_i RMW_t + c_i CMA_t + \epsilon_{it}
+\end{equation}
+
+\section{實證結果分析}
+
+\subsection{模型解釋力比較}
+透過比較調整後 $R^2$，我們可以觀察新增因子對風險解釋力的提升。表 \ref{tab:r2_compare} 顯示了三個模型的比較結果。
+
+% 這裡是自動引入 Python 生成的表格
+\input{output/tables/r2_comparison.tex}
+
+\subsection{因子顯著性分析}
+Fama-French 五因子的具體係數估計如表 \ref{tab:ff5_params} 所示。
+\begin{itemize}
+    \item \textbf{規模因子 (SMB)}: 由於選股多為大型股，預期 $s_i$ 多為負值。
+    \item \textbf{獲利能力因子 (RMW)}: Costco 與 McDonald's 展現了顯著的正向 RMW 係數，反映其強大的護城河與高 ROE 特徵。
+\end{itemize}
+
+% 這裡引入第二張表格
+\input{output/tables/ff5_factors.tex}
+
+\section{結論}
+實證結果顯示，FF5 模型在消費零售類股的解釋力優於 CAPM 與 FF3。特別是加入 RMW 因子後，有效解釋了高品質零售股（Quality Stocks）的超額報酬來源。
+
+\end{document}
