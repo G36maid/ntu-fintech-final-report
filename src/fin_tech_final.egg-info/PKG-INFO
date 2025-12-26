@@ -1,0 +1,66 @@
+Metadata-Version: 2.4
+Name: fin-tech-final
+Version: 0.1.0
+Summary: Add your description here
+Requires-Python: >=3.13
+Description-Content-Type: text/markdown
+Requires-Dist: matplotlib>=3.10.8
+Requires-Dist: pandas>=2.3.3
+Requires-Dist: pandas-datareader>=0.10.0
+Requires-Dist: scipy>=1.16.3
+Requires-Dist: seaborn>=0.13.2
+Requires-Dist: statsmodels>=0.14.6
+Requires-Dist: tabulate>=0.9.0
+Requires-Dist: yfinance>=1.0
+
+題⽬ M：經典⾵險因⼦模型之⽐較與解釋⼒分析
+敘述：
+請選擇⾄少⼗檔上市公司股票，整理其基本特徵並分析三種經典資產定價模型（CAPM、
+Fama-French 三因⼦、Fama-French 五因⼦）的理論架構、因⼦來源與可解釋的⾵險。最後
+⽐較三模型在理論上的相對解釋⼒。
+要求：
+• 選股與特徵整理：選擇⾄少 10 檔股票，整理每檔股票的基本特徵（如產業、規模、估
+值）。
+• 模型介紹：介紹 CAPM、Fama-French 三因⼦、Fama-French 五因⼦模型。
+•模型⽐較與差異：
+• 每個新增因⼦解決了什麼問題？
+• 哪些股票特徵是 CAPM 無法解釋、但 FF3 或 FF5 可以解釋的？
+• 理論解釋⼒分析：
+• 你的投資組合中，哪些股票較符合 CAPM？哪些嚴重偏離？
+• FF3 模型是否因 SMB/HML 捕捉到更多⾵險？
+• FF5 模型是否因 RMW/CMA 更全⾯？
+• 完整報告：撰寫完整報告，包含圖表、數據分析與結論。
+⼦領域：
+M-1. 科技與⾼成⾧型組合 (Tech & High Growth)
+參考範例（請⾃⾏擴充⾄ 10 檔）：
+• Apple
+• Microsoft
+• Meta
+• NVIDIA
+• 或其他⾼成⾧科技股、SaaS 軟體服務公司等
+M-2. ⾦融與價值型組合 (Financials & Value)
+參考範例（請⾃⾏擴充⾄ 10 檔）：
+• JPMorgan Chase
+• Bank of America
+• Berkshire Hathaway
+• Goldman Sachs
+• Wells Fargo
+• 或其他銀⾏、保險、資產管理公司
+M-3. 消費與零售通路組合 (Consumer & Retail)
+參考範例（請⾃⾏擴充⾄ 10 檔）：
+• Walmart
+• Costco
+• McDonald's
+• Nike
+• Starbucks
+• 或其他⼤型零售商、餐飲、服飾品牌
+
+評分標準
+繳交：報告pdf檔案、demo的影片連結(Youtube)、demo的簡報
+影片和簡報為加分項，不一定要繳交。
+
+項目 說明 配分
+達到所有要求 需要完成所有題目提到的要求 60分
+報告品質 技術寫作清晰、有良好可讀性 20分
+額外內容 除了要求外，和題目相關的內容 20分
+影片和簡報 影片口頭清晰、簡報簡明扼要 bonus 10分
