@@ -2,7 +2,7 @@
 \usepackage[utf8]{inputenc}
 % 若需要中文字體 (建議使用 XeLaTeX 編譯)
 \usepackage{xeCJK}
-\setCJKmainfont{Taipei Sans TC Beta} % 這裡請換成你系統有的字體，如 "Microsoft JhengHei" 或 "Noto Sans TC"
+\setCJKmainfont{Source Han Sans TW} % 這裡請換成你系統有的字體，如 "Microsoft JhengHei" 或 "Noto Sans TC"
 
 \usepackage{geometry}
 \usepackage{graphicx}
@@ -26,7 +26,7 @@
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{output/images/cumulative_returns.png}
+    \includegraphics[width=0.9\textwidth]{../output/images/cumulative_returns.png}
     \caption{投資組合累積報酬率 (2020-2023)}
     \label{fig:returns}
 \end{figure}
@@ -41,19 +41,23 @@ R_{it} - R_{ft} = \alpha_i + \beta_i(R_{Mt} - R_{ft}) + s_i SMB_t + h_i HML_t + 
 
 \subsection{模型解釋力比較}
 透過比較調整後 $R^2$，我們可以觀察新增因子對風險解釋力的提升。表 \ref{tab:r2_compare} 顯示了三個模型的比較結果。
+從數據中可以發現，加入 FF3 與 FF5 因子後，模型的解釋力普遍提升。
+特別是 \textbf{Amazon (AMZN)}，其 $R^2$ 從 CAPM 的 0.43 提升至 FF5 的 0.60，顯示單純的市場因子無法解釋其高成長與投資屬性。
+此外，\textbf{Pepsi (PEP)} 與 \textbf{Walmart (WMT)} 在加入因子後解釋力也有顯著增加，證實了這些股票具有明顯的風格特徵。
 
 % 這裡是自動引入 Python 生成的表格
-\input{output/tables/r2_comparison.tex}
+\input{../output/tables/r2_comparison.tex}
 
 \subsection{因子顯著性分析}
 Fama-French 五因子的具體係數估計如表 \ref{tab:ff5_params} 所示。
 \begin{itemize}
     \item \textbf{規模因子 (SMB)}: 由於選股多為大型股，預期 $s_i$ 多為負值。
-    \item \textbf{獲利能力因子 (RMW)}: Costco 與 McDonald's 展現了顯著的正向 RMW 係數，反映其強大的護城河與高 ROE 特徵。
+    \item \textbf{獲利能力因子 (RMW)}: 幾乎所有選股的 RMW 係數皆為正值，其中 \textbf{Home Depot (HD, 0.58)} 與 \textbf{Costco (COST, 0.45)} 係數最高，反映其強大的護城河與高 ROE 特徵，屬於典型的「品質股 (Quality Stocks)」。
+    \item \textbf{投資風格因子 (CMA)}: \textbf{Amazon (AMZN)} 的 CMA 係數為顯著負值 (-1.01)，反映其積極擴張與高資本支出的特性（Aggressive Investment）。相對地，\textbf{Pepsi (PEP, 0.69)} 與 \textbf{Walmart (WMT, 0.58)} 則呈現保守投資特徵，符合其防禦型股票的定位。
 \end{itemize}
 
 % 這裡引入第二張表格
-\input{output/tables/ff5_factors.tex}
+\input{../output/tables/ff5_factors.tex}
 
 \section{結論}
 實證結果顯示，FF5 模型在消費零售類股的解釋力優於 CAPM 與 FF3。特別是加入 RMW 因子後，有效解釋了高品質零售股（Quality Stocks）的超額報酬來源。

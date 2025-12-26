@@ -46,7 +46,9 @@ def save_latex_tables(df_results):
     # 表1: 模型解釋力比較 (R-squared)
     r2_cols = ["Ticker", "CAPM_R2", "FF3_R2", "FF5_R2"]
     df_r2 = df_results[r2_cols].copy()
-    for col in r2_cols[1:]:
+    # Rename columns to LaTeX-safe names
+    df_r2.columns = ["Ticker", "CAPM $R^2$", "FF3 $R^2$", "FF5 $R^2$"]
+    for col in df_r2.columns[1:]:
         df_r2[col] = df_r2[col].apply(lambda x: f"{x:.4f}")
 
     latex_r2 = df_r2.to_latex(
@@ -54,6 +56,7 @@ def save_latex_tables(df_results):
         caption="三種模型之調整後 R-squared 比較",
         label="tab:r2_compare",
         position="htbp",
+        escape=False,
     )
     with open("output/tables/r2_comparison.tex", "w") as f:
         f.write(latex_r2)

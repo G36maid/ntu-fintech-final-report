@@ -1,6 +1,45 @@
+# Python
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+.Python
 .venv/
+venv/
+ENV/
+env/
+*.egg-info/
+
+# Ruff
 .ruff_cache/
+
+# Output files (generated data)
 output/
+
+# LaTeX auxiliary files
+*.aux
+*.log
+*.out
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.xdv
+*.toc
+*.lof
+*.lot
+
+# Keep the final PDF
+!docs/report.pdf
+
+# macOS
 .DS_Store
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# UV lock file (keep it for reproducibility)
+# uv.lock

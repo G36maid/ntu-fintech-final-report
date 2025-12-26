@@ -1,0 +1,73 @@
+.PHONY: help install run analysis report clean lint format test all
+
+# Default target
+help:
+	@echo "Available targets:"
+	@echo "  make install    - Install dependencies using uv"
+	@echo "  make run        - Run the complete analysis pipeline"
+	@echo "  make analysis   - Run analysis only (no report compilation)"
+	@echo "  make report     - Compile LaTeX report to PDF"
+	@echo "  make all        - Run analysis and compile report"
+	@echo "  make clean      - Remove generated files (output/, LaTeX aux files)"
+	@echo "  make lint       - Run code linting with ruff"
+	@echo "  make format     - Format code with ruff"
+	@echo "  make test       - Run tests (if available)"
+
+# Install dependencies
+install:
+	@echo "📦 Installing dependencies with uv..."
+	uv sync
+
+# Run the complete analysis pipeline
+run: analysis
+
+# Run analysis only
+analysis:
+	@echo "⚡ Running financial analysis pipeline..."
+	uv run python main.py
+
+# Compile LaTeX report
+report:
+	@echo "📄 Compiling LaTeX report..."
+	cd docs && xelatex -interaction=nonstopmode report.tex
+	@echo "🔄 Running second pass for cross-references..."
+	cd docs && xelatex -interaction=nonstopmode report.tex
+	@echo "✅ Report compiled: docs/report.pdf"
+
+# Run everything
+all: analysis report
+	@echo "✅ Complete pipeline finished!"
+	@echo "📊 Results: output/tables/ and output/images/"
+	@echo "📄 Report: docs/report.pdf"
+
+# Clean generated files
+clean:
+	@echo "🧹 Cleaning generated files..."
+	rm -rf output/tables/*.tex output/images/*.png
+	rm -f docs/*.aux docs/*.log docs/*.out docs/*.fls docs/*.fdb_latexmk docs/*.synctex.gz docs/*.xdv
+	@echo "✅ Cleaned (kept docs/report.pdf)"
+
+# Deep clean (including PDF)
+clean-all: clean
+	rm -f docs/report.pdf
+	@echo "✅ Deep clean complete"
+
+# Lint code
+lint:
+	@echo "🔍 Running ruff linter..."
+	uv run ruff check .
+
+# Format code
+format:
+	@echo "🎨 Formatting code with ruff..."
+	uv run ruff format .
+	uv run ruff check --fix .
+
+# Run tests (placeholder)
+test:
+	@echo "🧪 Running tests..."
+	uv run pytest
+
+# Development workflow
+dev: format lint analysis
+	@echo "✅ Development checks passed!"
