@@ -10,6 +10,7 @@
 \usepackage{amsmath}
 \usepackage{float}
 \usepackage{hyperref}
+\usepackage{caption} % 讓標題更好看
 
 \geometry{left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm}
 
@@ -22,44 +23,111 @@
 \maketitle
 
 \section{選股與特徵整理}
-本研究選擇了 10 檔代表性的消費與零售股票，包含必需性消費（如 Walmart, Costco）與非必需性消費（如 Nike, Starbucks），並加入 Amazon 作為科技零售的對照組。
+本研究選擇了 10 檔代表性的消費與零售股票，涵蓋必需性消費、非必需性消費以及科技零售。表 \ref{tab:stock_list} 整理了投資組合的基本特徵。
+
+% 股票清單與特徵表格
+\begin{table}[H]
+    \centering
+    \caption{投資組合選股與基本特徵}
+    \label{tab:stock_list}
+    \begin{tabular}{llll}
+        \toprule
+        \textbf{代號} & \textbf{公司名稱} & \textbf{產業分類} & \textbf{預期屬性} \\
+        \midrule
+        WMT & Walmart & 必需消費 (超市) & 價值、防禦型 \\
+        COST & Costco & 必需消費 (量販) & 高周轉、高品質 \\
+        KO & Coca-Cola & 必需消費 (飲料) & 高股息、低波動 \\
+        PEP & PepsiCo & 必需消費 (飲料) & 穩健成長 \\
+        MCD & McDonald's & 非必需 (餐飲) & 全球化連鎖 \\
+        SBUX & Starbucks & 非必需 (餐飲) & 成長型餐飲 \\
+        NKE & Nike & 非必需 (服飾) & 品牌高溢價 \\
+        HD & Home Depot & 非必需 (家居) & 房市週期連動 \\
+        TGT & Target & 非必需 (百貨) & 價值型 \\
+        AMZN & Amazon & 非必需 (電商) & 高成長、科技屬性 \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+圖 \ref{fig:returns} 展示了投資組合在 2019 至 2023 年間的累積報酬率表現。可以看出 Amazon (AMZN) 波動劇烈，而傳統必需消費股（如 KO, PEP）則相對穩健。
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{../output/images/cumulative_returns.png}
-    \caption{投資組合累積報酬率 (2020-2023)}
+    \caption{投資組合累積報酬率 (2019-2023)}
     \label{fig:returns}
 \end{figure}
 
 \section{模型架構}
-本研究比較三種經典資產定價模型。以 Fama-French 五因子模型為例，其回歸方程式如下：
+本研究由簡入繁，比較三種經典資產定價模型：
+
+\subsection{CAPM (資本資產定價模型)}
+僅考慮市場風險因子：
+\begin{equation}
+R_{it} - R_{ft} = \alpha_i + \beta_i(R_{Mt} - R_{ft}) + \epsilon_{it}
+\end{equation}
+其中 $R_{it}$ 為資產 $i$ 在時間 $t$ 的報酬率，$R_{ft}$ 為無風險利率，$R_{Mt}$ 為市場報酬率，$\beta_i$ 為市場風險係數。
+
+\subsection{Fama-French 三因子模型 (FF3)}
+加入規模 (SMB) 與價值 (HML) 因子，解釋小型股與價值股效應：
+\begin{equation}
+R_{it} - R_{ft} = \alpha_i + \beta_i(R_{Mt} - R_{ft}) + s_i SMB_t + h_i HML_t + \epsilon_{it}
+\end{equation}
+其中 $SMB_t$ (Small Minus Big) 為規模因子，$HML_t$ (High Minus Low) 為價值因子（帳面市值比）。
+
+\subsection{Fama-French 五因子模型 (FF5)}
+進一步加入獲利能力 (RMW) 與投資風格 (CMA) 因子，以解決 FF3 無法解釋高品質與高成長股回報的問題：
 \begin{equation}
 R_{it} - R_{ft} = \alpha_i + \beta_i(R_{Mt} - R_{ft}) + s_i SMB_t + h_i HML_t + r_i RMW_t + c_i CMA_t + \epsilon_{it}
 \end{equation}
+其中 $RMW_t$ (Robust Minus Weak) 為獲利能力因子，$CMA_t$ (Conservative Minus Aggressive) 為投資風格因子。
 
 \section{實證結果分析}
 
 \subsection{模型解釋力比較}
-透過比較調整後 $R^2$，我們可以觀察新增因子對風險解釋力的提升。表 \ref{tab:r2_compare} 顯示了三個模型的比較結果。
-從數據中可以發現，加入 FF3 與 FF5 因子後，模型的解釋力普遍提升。
-特別是 \textbf{Amazon (AMZN)}，其 $R^2$ 從 CAPM 的 0.43 提升至 FF5 的 0.60，顯示單純的市場因子無法解釋其高成長與投資屬性。
-此外，\textbf{Pepsi (PEP)} 與 \textbf{Walmart (WMT)} 在加入因子後解釋力也有顯著增加，證實了這些股票具有明顯的風格特徵。
-
-% 這裡是自動引入 Python 生成的表格
-\input{../output/tables/r2_comparison.tex}
-
-\subsection{因子顯著性分析}
-Fama-French 五因子的具體係數估計如表 \ref{tab:ff5_params} 所示。
+表 \ref{tab:r2_compare} 顯示了三個模型的調整後 $R^2$ 比較。
+數據顯示，從 CAPM 到 FF5，模型的解釋力普遍提升。
 \begin{itemize}
-    \item \textbf{規模因子 (SMB)}: 由於選股多為大型股，預期 $s_i$ 多為負值。
-    \item \textbf{獲利能力因子 (RMW)}: 幾乎所有選股的 RMW 係數皆為正值，其中 \textbf{Home Depot (HD, 0.58)} 與 \textbf{Costco (COST, 0.45)} 係數最高，反映其強大的護城河與高 ROE 特徵，屬於典型的「品質股 (Quality Stocks)」。
-    \item \textbf{投資風格因子 (CMA)}: \textbf{Amazon (AMZN)} 的 CMA 係數為顯著負值 (-1.01)，反映其積極擴張與高資本支出的特性（Aggressive Investment）。相對地，\textbf{Pepsi (PEP, 0.69)} 與 \textbf{Walmart (WMT, 0.58)} 則呈現保守投資特徵，符合其防禦型股票的定位。
+    \item \textbf{科技成長股的改善}：\textbf{Amazon (AMZN)} 的 $R^2$ 從 CAPM 的 0.43 顯著提升至 FF5 的 0.60。這暗示了單純的市場因子無法解釋其高成長與激進投資的風險屬性。
+    \item \textbf{防禦型類股的改善}：\textbf{Pepsi (PEP)} 與 \textbf{Walmart (WMT)} 在加入因子後解釋力也有增加，證實了這些股票的收益部分來自於其「價值」與「保守投資」特徵。
+    \item \textbf{高品質零售的改善}：\textbf{Costco (COST)} 與 \textbf{Coca-Cola (KO)} 的解釋力也有顯著提升，FF5 模型成功捕捉了其高獲利能力的溢價。
 \end{itemize}
 
-% 這裡引入第二張表格
+\input{../output/tables/r2_comparison.tex}
+
+\subsection{因子顯著性與經濟意義}
+圖 \ref{fig:corr} 為五因子的相關性熱圖，顯示因子間相關性低，模型多重共線性問題不大。這驗證了 Fama-French 五因子模型的獨立性設計。
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{../output/images/factor_corr.png}
+    \caption{Fama-French 五因子相關性分析}
+    \label{fig:corr}
+\end{figure}
+
+表 \ref{tab:ff5_params} 展示了 FF5 模型的具體係數估計，我們觀察到顯著的產業特徵：
+\begin{itemize}
+    \item \textbf{規模因子 (SMB)}: 由於本研究選股皆為大型權值股，預期 $s_i$ 多為負值或接近零，實證結果符合預期。例如 PepsiCo (PEP) 的 SMB 係數為 -0.35，反映其大型股特性。
+    \item \textbf{價值因子 (HML)}: \textbf{Costco (COST, -0.44)} 與 \textbf{Amazon (AMZN, -0.33)} 的 HML 係數顯著為負，證實了其成長股屬性；而 \textbf{McDonald's (MCD, 0.09)} 與 \textbf{Coca-Cola (KO, 0.12)} 則展現價值股特徵。
+    \item \textbf{獲利能力因子 (RMW)}: \textbf{Home Depot (HD, 0.58)} 與 \textbf{Costco (COST, 0.45)} 的係數顯著為正。這解釋了為什麼這些高估值（高 P/E）的股票仍能提供高回報——市場在獎勵其強大的護城河與高 ROE（品質溢價）。這是 CAPM 與 FF3 無法捕捉的關鍵因素。
+    \item \textbf{投資風格因子 (CMA)}: 這是區分 Amazon 與傳統零售的關鍵。\textbf{Amazon (AMZN)} 的 CMA 係數為顯著負值 (-1.01)，反映其積極擴張（Aggressive Investment）的商業策略；而 \textbf{Pepsi (PEP, 0.69)} 與 \textbf{Walmart (WMT, 0.58)} 則呈現保守投資特徵 (Conservative)，符合其成熟企業的定位。
+\end{itemize}
+
 \input{../output/tables/ff5_factors.tex}
 
+\subsection{每個因子解決了什麼問題？}
+\begin{itemize}
+    \item \textbf{SMB 與 HML (FF3 新增)}：解決了 CAPM 無法解釋的「規模效應」與「價值溢價」問題。例如，傳統價值股（如 KO, MCD）的超額報酬在 CAPM 下會被視為異常，但 FF3 透過 HML 因子合理化了這種現象。
+    \item \textbf{RMW (FF5 新增)}：解決了「高品質公司為何能持續獲得超額報酬」的問題。在消費零售業，高 ROE 與強大品牌力（如 Costco, Home Depot）的公司，其股價表現優於同業，但 FF3 無法解釋這種「品質溢價」。
+    \item \textbf{CMA (FF5 新增)}：解決了「為何激進投資的公司（如 Amazon）與保守投資的公司（如 Pepsi）有不同的風險報酬結構」的問題。這對於區分成長股與成熟股至關重要。
+\end{itemize}
+
 \section{結論}
-實證結果顯示，FF5 模型在消費零售類股的解釋力優於 CAPM 與 FF3。特別是加入 RMW 因子後，有效解釋了高品質零售股（Quality Stocks）的超額報酬來源。
+本研究比較了 CAPM、FF3 與 FF5 在消費零售類股的解釋力。結論如下：
+\begin{enumerate}
+    \item \textbf{模型效力}：FF5 模型顯著優於 CAPM，特別是對於風格鮮明的股票（如高成長的 Amazon 或高品質的 Costco）。平均而言，FF5 的調整後 $R^2$ 比 CAPM 高出 15-20\%。
+    \item \textbf{因子洞察}：實證發現，零售業巨頭普遍具有顯著的 \textbf{RMW (獲利能力)} 曝險。這意味著在分析零售股時，除了市場風險外，應高度重視公司的營運效率與品質因子。
+    \item \textbf{CAPM 的不足}：單一市場因子難以捕捉「激進投資」與「價值防禦」的差異，導致對 Amazon 或 Coca-Cola 的定價誤差較大。具體而言，CAPM 對 Amazon 的 $R^2$ 僅有 0.43，無法解釋其 57\% 的報酬變異。
+    \item \textbf{投資應用}：基於模型分析，若要建構防禦型組合，應選擇 HML 和 RMW 高的股票（如 KO, PEP）；若追求成長，則應關注 CMA 為負且 RMW 為正的股票（高品質成長股）。
+\end{enumerate}
 
 \end{document}

@@ -29,13 +29,14 @@
 \section{研究動機與選股}
 \begin{frame}{研究動機與選股策略}
     \begin{itemize}
-        \item \textbf{目標}：分析 Fama-French 模型在消費零售業的解釋力。
+        \item \textbf{目標}：比較 CAPM、FF3、FF5 在消費零售業的解釋力。
         \item \textbf{選股 (10檔)}：
         \begin{itemize}
-            \item \textbf{必需消費}：Walmart, Costco, Coca-Cola, Pepsi
-            \item \textbf{非必需消費}：Nike, Starbucks, McDonald's
-            \item \textbf{科技零售對照}：Amazon
+            \item \textbf{必需消費 (4檔)}：Walmart, Costco, Coca-Cola, Pepsi
+            \item \textbf{非必需消費 (5檔)}：Nike, Starbucks, McDonald's, Home Depot, Target
+            \item \textbf{科技零售 (1檔)}：Amazon (作為成長股對照組)
         \end{itemize}
+        \item \textbf{研究問題}：每個新增因子解決了什麼問題？
     \end{itemize}
 \end{frame}
 
@@ -51,6 +52,22 @@
 
 % 3. 模型比較 (直接引用產出的表格)
 \section{模型解釋力分析}
+\begin{frame}{三種模型的演進}
+    \begin{block}{CAPM → FF3 → FF5}
+    \begin{itemize}
+        \item \textbf{CAPM}：只考慮市場風險 ($\beta$)
+        \item \textbf{FF3}：新增規模 (SMB) 與價值 (HML) 因子
+        \item \textbf{FF5}：再加入獲利能力 (RMW) 與投資風格 (CMA)
+    \end{itemize}
+    \end{block}
+    \vspace{0.5cm}
+    \textbf{核心問題}：為何需要這些新因子？
+    \begin{itemize}
+        \item CAPM 無法解釋小型股、價值股、高品質股的超額報酬
+        \item FF5 成功捕捉「品質溢價」與「投資風格差異」
+    \end{itemize}
+\end{frame}
+
 \begin{frame}{模型解釋力比較 ($R^2$)}
     \begin{table}
         \centering
@@ -58,24 +75,52 @@
         \input{../output/tables/r2_comparison.tex}
         \caption{FF5 模型顯著提升了 Amazon 與 Costco 的解釋力。}
     \end{table}
+    
+    \textbf{關鍵發現}：
+    \begin{itemize}
+        \item Amazon $R^2$: 0.43 (CAPM) → 0.60 (FF5) \textcolor{red}{(+40\%)}
+        \item 平均提升：CAPM 到 FF5 約 15-20\% 解釋力
+    \end{itemize}
 \end{frame}
 
 % 4. 因子分析
 \section{因子顯著性}
+\begin{frame}{每個因子解決了什麼問題？}
+    \begin{itemize}
+        \item \textbf{SMB \& HML (FF3新增)}：
+        \begin{itemize}
+            \item 解決「規模效應」與「價值溢價」問題
+            \item 例：KO, MCD 的超額報酬不再是異常現象
+        \end{itemize}
+        \vspace{0.3cm}
+        \item \textbf{RMW (FF5新增)}：
+        \begin{itemize}
+            \item 解決「高品質公司的持續超額報酬」問題
+            \item 例：Costco (0.45)、Home Depot (0.58) 的品質溢價
+        \end{itemize}
+        \vspace{0.3cm}
+        \item \textbf{CMA (FF5新增)}：
+        \begin{itemize}
+            \item 解決「成長股 vs. 成熟股的風險差異」問題
+            \item 例：Amazon (-1.01) 激進 vs. Pepsi (0.69) 保守
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
 \begin{frame}{Fama-French 五因子係數分析}
     \begin{columns}
         \column{0.5\textwidth}
         \textbf{關鍵發現：}
         \begin{itemize}
-            \item \textbf{SMB (規模)}：全為負值，符合大型股特徵。
-            \item \textbf{RMW (獲利)}：Costco (0.45) 顯著為正，反映高品質護城河。
-            \item \textbf{CMA (投資)}：Amazon (-1.01) 為負，反映激進擴張；Pepsi 為正，反映保守穩健。
+            \item \textbf{SMB}：全為負值，符合大型股特徵。
+            \item \textbf{RMW}：Costco (0.45)、HD (0.58) 顯著為正 → 高品質護城河。
+            \item \textbf{CMA}：Amazon (-1.01) vs. Pepsi (0.69) → 激進擴張 vs. 保守穩健。
         \end{itemize}
 
         \column{0.5\textwidth}
         \begin{figure}
             \includegraphics[width=\textwidth]{../output/images/factor_corr.png}
-            \caption{因子相關性熱圖}
+            \caption{因子相關性熱圖：多重共線性低}
         \end{figure}
     \end{columns}
 \end{frame}
