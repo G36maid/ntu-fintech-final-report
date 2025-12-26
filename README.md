@@ -3,6 +3,34 @@
 ## 內容說明
 本專案旨在選擇至少十檔上市公司股票，整理其基本特徵，並分析三種經典資產定價模型（CAPM、Fama-French 三因子、Fama-French 五因子）的理論架構、因子來源與可解釋的風險。最後，將比較三種模型在理論上的相對解釋力。
 
+## 快速開始
+
+### 安裝依賴
+```bash
+make install
+```
+
+### 執行完整流程
+```bash
+make all
+```
+這將執行數據分析並編譯 LaTeX 報告。
+
+### 常用命令
+```bash
+make help      # 顯示所有可用命令
+make analysis  # 僅執行數據分析
+make report    # 僅編譯 LaTeX 報告
+make clean     # 清理生成的檔案
+make lint      # 檢查代碼風格
+make format    # 格式化代碼
+```
+
+## 輸出檔案
+- `output/tables/` - LaTeX 表格（R² 比較、FF5 因子係數）
+- `output/images/` - 視覺化圖表（累積報酬率、因子相關性）
+- `docs/report.pdf` - 最終報告 PDF
+
 ---
 
 ## 專案要求
